@@ -19,6 +19,14 @@ namespace OnionArchitecture.Persistence.Context
             optionsBuilder.UseInMemoryDatabase("OnionArchitectureDb");
         }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Event>().OwnsOne(x => x.Location);
+
+            base.OnModelCreating(modelBuilder);
+        }
+
+
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
             var data = ChangeTracker.Entries<EntityBase>();
