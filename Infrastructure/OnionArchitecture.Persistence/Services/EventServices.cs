@@ -1,4 +1,6 @@
-﻿using OnionArchitecture.Application.Abstract.Services;
+﻿using Microsoft.EntityFrameworkCore.Diagnostics;
+using Microsoft.EntityFrameworkCore;
+using OnionArchitecture.Application.Abstract.Services;
 using OnionArchitecture.Application.Dtos;
 using OnionArchitecture.Application.RequestParameters;
 using OnionArchitecture.Domain.Entities;
@@ -45,21 +47,20 @@ namespace OnionArchitecture.Persistence.Services
 
         public async Task<IEnumerable<EventDto>> GetAllEventsAsync(Pagination pagination)
         {
-            
-           var events =_context.Events
-                .Skip(pagination.PageCount * pagination.ItemCount)
-                .Take(pagination.ItemCount)
-                .Select(e => new EventDto
-                {
-                   
-                    Title = e.Title,
-                    Date = e.Date,
-                    Location = e.Location
-                });
 
-            return (events);
-
-            
+            return await _context.Events
+                 .AsNoTracking()
+                 .Select(x => new EventDto()
+                 {
+                     Title = x.Title,
+                     Date = x.Date,
+                     Location = x.Location,
+                 })
+                 .Skip(pagination.PageCount * pagination.ItemCount)
+                 .Take(pagination.ItemCount)
+                 .ToListAsync();
         }
-    }
-}
+
+     }
+   }
+
