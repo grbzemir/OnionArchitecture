@@ -10,4 +10,10 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\Core\OnionArchitecture.Application\OnionArchitecture.Application.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\OnionArchitecture.Infrastructure\OnionArchitecture.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\OnionArchitecture.Persistence\OnionArchitecture.Persistence.csproj" />
+  </ItemGroup>
+
 </Project>
